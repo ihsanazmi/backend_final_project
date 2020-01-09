@@ -155,6 +155,7 @@ router.get(`/getAllTransaction`, (req, res)=>{
         t.no_resi,
         t.grand_total,
         t.created_at,
+        t.delivered_at,
         s.status,
         a.penerima,
         a.phone_number,

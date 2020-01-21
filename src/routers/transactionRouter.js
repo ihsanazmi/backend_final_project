@@ -248,4 +248,12 @@ router.get(`/totalTransaction`, (req, res)=>{
     })
 })
 
+router.patch(`/transaction/updateReview`, (req, res)=>{
+    let sql = `update t_transaction_detail set reviewed = '1' where transaction_id = '${req.body.transaction_id}' and product_id = '${req.body.product_id}'`
+    conn.query(sql, (err, result)=>{
+        if(err) return res.send({error: err.message})
+        res.send(result)
+    })
+})
+
 module.exports = router

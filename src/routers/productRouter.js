@@ -369,10 +369,15 @@ router.get(`/transaction/getDetail/:transaction_id`, (req, res)=>{
         t.qty,
         t.price,
         p.product,
-        p.image_product
+        p.image_product,
+        t.reviewed,
+        r.comment,
+        r.rating
     from t_transaction_detail t
     join t_products p
         on p.id = t.product_id
+    left join t_review r
+        on r.transaction_id = t.transaction_id and t.product_id = r.product_id 
     where t.transaction_id = '${req.params.transaction_id}'`
 
     conn.query(sql, (err, result)=>{
@@ -388,7 +393,7 @@ router.get(`/transaction/getDetail/:transaction_id`, (req, res)=>{
     })
 })
 
-router.post(`/transaction/review/`, (req, res)=>{
+router.post(`/transaction/review`, (req, res)=>{
     let sql = `INSERT INTO t_review SET ?`
     let data = req.body
 
@@ -423,10 +428,13 @@ router.get(`/infoTotalTerjual`, (req, res)=>{
         p.product,
         p.price,
         p.stock,
+        r.rating,
         count(t.product_id) as total_terjual
     from t_transaction_detail t
     join t_products p
         on t.product_id = p.id
+    join t_review r
+        on p.id = r.product_id
     group by product_id
     order by total_terjual desc
     limit 10`

@@ -8,6 +8,7 @@ const tipeRouter = require('./routers/tipeRouter')
 const kategoriRouter = require('./routers/kategoriRouter')
 const cartRouter = require('./routers/cartRouter')
 const transactionRouter = require('./routers/transactionRouter')
+const reviewRouter = require('./routers/reviewRouter')
 
 const app = express()
 const port = 2018
@@ -21,6 +22,7 @@ app.use(tipeRouter)
 app.use(kategoriRouter)
 app.use(cartRouter)
 app.use(transactionRouter)
+app.use(reviewRouter)
 
 app.listen(port, ()=>{
     console.log(`running at port ${port}`)

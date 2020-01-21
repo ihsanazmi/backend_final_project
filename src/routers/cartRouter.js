@@ -20,7 +20,9 @@ router.get(`/cart/get/:product_id/:customer_id`, (req, res)=>{
 
 // GET QTY CART
 router.get(`/cart/getQty/:id_cart`, (req, res)=>{
-    let sql = `SELECT qty FROM t_carts where id= ${req.params.id_cart}`
+    let sql = `select c.qty, p.stock from t_carts c
+    join t_products p
+    on p.id = c.product_id where c.id= ${req.params.id_cart}`
 
     conn.query(sql, (err, result)=>{
         if(err) return res.send({error: err.message})

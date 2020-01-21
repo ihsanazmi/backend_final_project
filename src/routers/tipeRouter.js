@@ -109,13 +109,25 @@ router.patch(`/products/updateTipeWithImg/:id_tipe/:type`, upload.single('type_i
     })
 })
 
-// INSERT TIPE
+// INSERT TIPE WTIHOUT IMG
 router.post(`/products/saveTipe`, (req, res)=>{
     let sql = `INSERT INTO t_type_products SET ?`
     let data = req.body
 
     conn.query(sql, data, (err, result)=>{
         if(err) return res.send({error: err.message})
+        res.send(result)
+    })
+})
+
+// INSERT TYPE WITH IMG
+router.post(`/products/saveTipewithImg`, upload.single('type_image'), (req, res)=>{
+    let sql = `INSERT INTO t_type_products SET ? `
+    let data = req.body
+    if(req.file) data.type_image = req.file.filename
+
+    conn.query(sql, data, (err, result)=>{
+        if(err) return res.send({error:err.message})
         res.send(result)
     })
 })

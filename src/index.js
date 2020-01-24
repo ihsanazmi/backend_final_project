@@ -11,7 +11,7 @@ const transactionRouter = require('./routers/transactionRouter')
 const reviewRouter = require('./routers/reviewRouter')
 
 const app = express()
-const port = process.env.PORT || 2019
+const port = process.env.PORT || 2018
 // const port = 2018
 
 app.use(cors())

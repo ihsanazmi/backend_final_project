@@ -134,7 +134,7 @@ router.get(`/transaction/:customer_id`, (req, res)=>{
         let data = result
         data.map(val=>{
             // produk.image_name = `${uploadDirectory}${avatarName}`
-            val.payment_proof = `http://localhost:2018/transaction/getImage/${val.payment_proof}`
+            val.payment_proof = `https://backend-komputer-shop.herokuapp.com/transaction/getImage/${val.payment_proof}`
             // console.log(produk.gambar)
         })
 
@@ -180,7 +180,7 @@ router.get(`/getAllTransaction`, (req, res)=>{
         let data = result
         data.map(val=>{
             // produk.image_name = `${uploadDirectory}${avatarName}`
-            val.payment_proof = `http://localhost:2018/transaction/getImage/${val.payment_proof}`
+            val.payment_proof = `https://backend-komputer-shop.herokuapp.com/transaction/getImage/${val.payment_proof}`
             // console.log(produk.gambar)
         })
         // console.log(result)

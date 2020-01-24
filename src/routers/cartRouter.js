@@ -50,7 +50,7 @@ router.get(`/cart/getAll/:customer_id`, (req, res)=>{
         let data = result
         data.map(produk=>{
             // produk.image_name = `${uploadDirectory}${avatarName}`
-            produk.image_product = `http://localhost:2018/product/getImage/${produk.image_product}`
+            produk.image_product = `https://backend-komputer-shop.herokuapp.com/product/getImage/${produk.image_product}`
             // console.log(produk.gambar)
         })
         res.send(result)

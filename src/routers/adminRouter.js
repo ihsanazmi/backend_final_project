@@ -8,7 +8,7 @@ router.get('/admin/allUser', (req,res)=>{
         if(err) return res.send(err.message)
         let data = result
         data.map(item=>{
-            item.avatar = `http://localhost:2018/avatar/${item.avatar}`
+            item.avatar = `https://backend-komputer-shop.herokuapp.com/avatar/${item.avatar}`
             // console.log(item.avatar)
         })
         // console.log(data)

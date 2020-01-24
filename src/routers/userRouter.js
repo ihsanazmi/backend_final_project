@@ -53,7 +53,7 @@ router.post('/avatar/:username',upload.single('avatar'), (req, res)=>{
 
         conn.query(sql2, (err, result)=>{
             if(err) return res.send(err)
-            res.send({filename: `http://localhost:2018/avatar/${req.file.filename}`})
+            res.send({filename: `https://backend-komputer-shop.herokuapp.com/avatar/${req.file.filename}`})
         })
 
     })
@@ -139,7 +139,7 @@ router.post('/users/login', (req, res)=>{
         }
         res.send({
            ... user,
-           avatar: `http://localhost:2018/avatar/${user.avatar}`
+           avatar: `https://backend-komputer-shop.herokuapp.com/avatar/${user.avatar}`
         })
     })
 })
@@ -185,7 +185,7 @@ router.get('/users/profile/:id', (req, res)=>{
 
         res.send({
             ...user,
-            avatar: `http://localhost:2018/avatar/${user.avatar}`
+            avatar: `https://backend-komputer-shop.herokuapp.com/avatar/${user.avatar}`
         })
     })
 })

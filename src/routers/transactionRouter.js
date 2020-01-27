@@ -88,13 +88,34 @@ router.patch(`/transaction/updateresi/:transaction_id`, (req, res)=>{
         `
         conn.query(sql2, (err, result)=>{
             if(err) return res.send({error: err.message})
-            console.log(result[0].grand_total)
-            result[0].updated_at = moment(result[0].updated_at).format("MMMM Do YYYY")
-            result[0].grand_total = `Rp.${Intl.NumberFormat().format(result[0].grand_total).replace(/,/g, '.')}`
-            console.log(result[0].grand_total)
-            console.log(result[0].updated_at)
-            sendReceipt(result[0])
-            res.send(result)
+            let sql2 = `select 
+                            u.email,
+                            t.grand_total,
+                            t.no_invoice,
+                            t.created_at,
+                            t.updated_at,
+                            t.no_resi,
+                            t.destination,
+                            t.penerima,
+                            p.product,
+                            p.price,
+                            td.qty
+                        from t_transaction t
+                        join t_transaction_detail td
+                        on t.transaction_id = td.transaction_id
+                        join t_products p
+                        on p.id = td.product_id
+                        join users u
+                        on u.id = t.customer_id
+                        where t.transaction_id = '${req.params.transaction_id}'`
+
+            conn.query(sql2, (err, result)=>{
+                if(err) return res.send({error: err.message})
+                sendReceipt(result)
+                // console.log(result)
+                res.send(result)
+
+            })
         })
     })
 })
@@ -134,7 +155,7 @@ router.get(`/transaction/:customer_id`, (req, res)=>{
         let data = result
         data.map(val=>{
             // produk.image_name = `${uploadDirectory}${avatarName}`
-            val.payment_proof = `https://backend-komputer-shop.herokuapp.com/transaction/getImage/${val.payment_proof}`
+            val.payment_proof = `https://api.komputer-shop.com/transaction/getImage/${val.payment_proof}`
             // console.log(produk.gambar)
         })
 
@@ -180,7 +201,7 @@ router.get(`/getAllTransaction`, (req, res)=>{
         let data = result
         data.map(val=>{
             // produk.image_name = `${uploadDirectory}${avatarName}`
-            val.payment_proof = `https://backend-komputer-shop.herokuapp.com/transaction/getImage/${val.payment_proof}`
+            val.payment_proof = `https://api.komputer-shop.com/transaction/getImage/${val.payment_proof}`
             // console.log(produk.gambar)
         })
         // console.log(result)
@@ -191,7 +212,7 @@ router.get(`/getAllTransaction`, (req, res)=>{
 // REJECT TRANSACTION
 router.patch(`/transaction/reject/:id_transaction`, (req, res)=>{
     let sql = `UPDATE t_transaction set status = '3', notes = '${req.body.notes}' where transaction_id = '${req.params.id_transaction}'`
-
+    
     conn.query(sql, (err, result)=>{
         if(err) return res.send({error: err.message})
         res.send(result)

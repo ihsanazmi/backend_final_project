@@ -2,6 +2,7 @@ const conn = require('../connection/index')
 const router = require('express').Router()
 const multer = require('multer')
 const path = require('path')
+const {invoice} = require('../email/nodemailer')
 const uploadDirectory = path.join(__dirname, '/../../public/uploads/products/')
 const fs = require('fs')
 
@@ -50,7 +51,7 @@ router.get(`/cart/getAll/:customer_id`, (req, res)=>{
         let data = result
         data.map(produk=>{
             // produk.image_name = `${uploadDirectory}${avatarName}`
-            produk.image_product = `https://backend-komputer-shop.herokuapp.com/product/getImage/${produk.image_product}`
+            produk.image_product = `https://api.komputer-shop.com/product/getImage/${produk.image_product}`
             // console.log(produk.gambar)
         })
         res.send(result)
@@ -91,6 +92,7 @@ router.delete(`/cart/delete/:id_cart`, (req, res)=>{
 
 router.post(`/cart/checkout`, (req, res)=>{
     let sql = `INSERT INTO t_transaction SET ?`
+    
     let data = req.body
 
     conn.beginTransaction((err)=>{
@@ -120,10 +122,34 @@ router.post(`/cart/checkout`, (req, res)=>{
                     conn.query(sql4, (err, result)=>{
                         if(err) {conn.rollback(()=>{ throw err})}
 
-                        conn.commit((err)=>{
-                            if(err){conn.rollback((err)=>{throw err})}
+                        let sql5 = 
+                            `select 
+                                u.email,
+                                t.grand_total,
+                                t.no_invoice,
+                                p.product,
+                                td.qty,
+                                td.price,
+                                t.created_at
+                                
+                            from t_transaction t
+                            join t_transaction_detail td
+                            on t.transaction_id = td.transaction_id
+                            join t_products p
+                            on p.id = td.product_id
+                            join users u
+                            on t.customer_id = u.id
+                            where t.transaction_id = '${req.body.transaction_id}'`
+                        conn.query(sql5, (err, result)=>{
+                            if(err) {conn.rollback(()=>{ throw err})}
+
+                            conn.commit((err)=>{
+                                if(err){conn.rollback((err)=>{throw err})}
+                            })
+                            invoice(result)
+                            res.send(result)
                         })
-                        res.send(result)
+                        
                     })
                 })
 

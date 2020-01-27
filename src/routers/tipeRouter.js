@@ -51,7 +51,7 @@ router.get('/products/type_products', (req, res)=>{
         let data = result
         data.map(tipe=>{
             // produk.image_name = `${uploadDirectory}${avatarName}`
-            tipe.type_image = `https://backend-komputer-shop.herokuapp.com/product/getImageTipe/${tipe.type_image}`
+            tipe.type_image = `https://api.komputer-shop.com/product/getImageTipe/${tipe.type_image}`
             // console.log(produk.gambar)
         })
         res.send(result)

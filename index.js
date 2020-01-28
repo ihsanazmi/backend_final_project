@@ -1,14 +1,14 @@
 const express = require('express')
 const cors = require('cors')
 
-const userRouter = require('./routers/userRouter')
-const adminRouter = require('./routers/adminRouter')
-const productRouter = require('./routers/productRouter')
-const tipeRouter = require('./routers/tipeRouter')
-const kategoriRouter = require('./routers/kategoriRouter')
-const cartRouter = require('./routers/cartRouter')
-const transactionRouter = require('./routers/transactionRouter')
-const reviewRouter = require('./routers/reviewRouter')
+const userRouter = require('./src/routers/userRouter')
+const adminRouter = require('./src/routers/adminRouter')
+const productRouter = require('./src/routers/productRouter')
+const tipeRouter = require('./src/routers/tipeRouter')
+const kategoriRouter = require('./src/routers/kategoriRouter')
+const cartRouter = require('./src/routers/cartRouter')
+const transactionRouter = require('./src/routers/transactionRouter')
+const reviewRouter = require('./src/routers/reviewRouter')
 
 const app = express()
 const port = process.env.PORT || 2018

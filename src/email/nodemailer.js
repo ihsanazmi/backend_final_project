@@ -73,7 +73,7 @@ let invoice = (data)=>{
     let mail={
         from :'Komputer Shop <project.computer.shop@gmail.com',
         to: data[0].email,
-        subject: `Menunggu Pembayaran untuk invoice ${data.invoice}`,
+        subject: `Menunggu Pembayaran untuk invoice ${data[0].no_invoice}`,
         html:`<style>
         .body_email{
             width: 50%

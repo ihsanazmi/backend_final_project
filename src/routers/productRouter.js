@@ -75,7 +75,7 @@ router.get('/products', (req, res)=>{
         let data = result
         data.map(produk=>{
             // produk.image_name = `${uploadDirectory}${avatarName}`
-            produk.gambar = `https://api.komputer-shop.com/product/getImage/${produk.gambar}`
+            produk.gambar = `http://localhost:2018/product/getImage/${produk.gambar}`
             // console.log(produk.gambar)
         })
 
@@ -109,7 +109,7 @@ router.get(`/products/getDetail/:id_product`, (req, res)=>{
         let data = result
         data.map(produk=>{
             // produk.image_name = `${uploadDirectory}${avatarName}`
-            produk.image_product = `https://api.komputer-shop.com/product/getImage/${produk.image_product}`
+            produk.image_product = `http://localhost:2018/product/getImage/${produk.image_product}`
             // console.log(produk.gambar)
         })
 
@@ -351,7 +351,7 @@ router.get(`/products/review/:id_product`, (req, res)=>{
         let data = result
         data.map(user=>{
             // produk.image_name = `${uploadDirectory}${avatarName}`
-            user.avatar = `https://api.komputer-shop.com/avatar/${user.avatar}`
+            user.avatar = `http://localhost:2018/avatar/${user.avatar}`
             // console.log(produk.gambar)
         })
         // /avatar/:imageName
@@ -385,7 +385,7 @@ router.get(`/transaction/getDetail/:transaction_id`, (req, res)=>{
         let data = result
         data.map(val=>{
             // produk.image_name = `${uploadDirectory}${avatarName}`
-            val.image_product = `https://api.komputer-shop.com/product/getImage/${val.image_product}`
+            val.image_product = `http://localhost:2018/product/getImage/${val.image_product}`
             // console.log(produk.gambar)
         })
         // console.log(result)
@@ -413,7 +413,7 @@ router.get(`/informasiStock`, (req, res)=>{
         if(err) return res.send({error: err.message})
         let data = result
         data.map(produk=>{
-            produk.image_product = `https://api.komputer-shop.com/product/getImage/${produk.image_product}`
+            produk.image_product = `http://localhost:2018/product/getImage/${produk.image_product}`
         })
         res.send(result)
     })
@@ -424,25 +424,25 @@ router.get(`/infoTotalTerjual`, (req, res)=>{
     `select 
         t.id,
         t.product_id,
+        t.qty,
         p.image_product,
         p.product,
         p.price,
         p.stock,
-        r.rating,
-        count(t.product_id) as total_terjual
+        r.rating
     from t_transaction_detail t
     join t_products p
         on t.product_id = p.id
     join t_review r
         on p.id = r.product_id
     group by product_id
-    order by total_terjual desc
+    order by t.qty desc
     limit 10`
     conn.query(sql, (err, result)=>{
         if(err) return res.send({error:err.message})
         let data = result
         data.map(produk=>{
-            produk.image_product = `https://api.komputer-shop.com/product/getImage/${produk.image_product}`
+            produk.image_product = `http://localhost:2018/product/getImage/${produk.image_product}`
         })
         res.send(result)
     })

@@ -53,7 +53,7 @@ router.post('/avatar/:username',upload.single('avatar'), (req, res)=>{
 
         conn.query(sql2, (err, result)=>{
             if(err) return res.send(err)
-            res.send({filename: `https://api.komputer-shop.com/avatar/${req.file.filename}`})
+            res.send({filename: `http://localhost:2018/avatar/${req.file.filename}`})
         })
 
     })
@@ -139,7 +139,7 @@ router.post('/users/login', (req, res)=>{
         }
         res.send({
            ... user,
-           avatar: `https://api.komputer-shop.com/avatar/${user.avatar}`
+           avatar: `http://localhost:2018/avatar/${user.avatar}`
         })
     })
 })
@@ -185,7 +185,7 @@ router.get('/users/profile/:id', (req, res)=>{
 
         res.send({
             ...user,
-            avatar: `https://api.komputer-shop.com/avatar/${user.avatar}`
+            avatar: `http://localhost:2018/avatar/${user.avatar}`
         })
     })
 })

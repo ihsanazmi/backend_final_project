@@ -49,9 +49,10 @@ router.get('/products/type_products', (req, res)=>{
     conn.query(sql, (err, result)=>{
         if(err) return res.send({error: err.message})
         let data = result
+        // console.log(data)
         data.map(tipe=>{
             // produk.image_name = `${uploadDirectory}${avatarName}`
-            tipe.type_image = `https://api.komputer-shop.com/product/getImageTipe/${tipe.type_image}`
+            tipe.type_image = `http://localhost:2018/product/getImageTipe/${tipe.type_image}`
             // console.log(produk.gambar)
         })
         res.send(result)

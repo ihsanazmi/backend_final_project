@@ -155,7 +155,11 @@ router.get(`/transaction/:customer_id`, (req, res)=>{
         let data = result
         data.map(val=>{
             // produk.image_name = `${uploadDirectory}${avatarName}`
-            val.payment_proof = `https://api.komputer-shop.com/transaction/getImage/${val.payment_proof}`
+            if(val.payment_proof === null){
+                val.payment_proof = 'NULL'
+            }else{
+                val.payment_proof = `http://localhost:2018/transaction/getImage/${val.payment_proof}`
+            }
             // console.log(produk.gambar)
         })
 
@@ -201,7 +205,7 @@ router.get(`/getAllTransaction`, (req, res)=>{
         let data = result
         data.map(val=>{
             // produk.image_name = `${uploadDirectory}${avatarName}`
-            val.payment_proof = `https://api.komputer-shop.com/transaction/getImage/${val.payment_proof}`
+            val.payment_proof = `http://localhost:2018/transaction/getImage/${val.payment_proof}`
             // console.log(produk.gambar)
         })
         // console.log(result)

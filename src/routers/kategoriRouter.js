@@ -48,7 +48,7 @@ router.get('/products/homekategori', (req,res)=>{
         let data = result
         data.map(tipe=>{
             // produk.image_name = `${uploadDirectory}${avatarName}`
-            tipe.type_image = `https://api.komputer-shop.com/product/getImageTipe/${tipe.type_image}`
+            tipe.type_image = `http://localhost:2018/product/getImageTipe/${tipe.type_image}`
             // console.log(produk.gambar)
         })
         res.send(data)

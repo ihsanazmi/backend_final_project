@@ -8,7 +8,7 @@ router.get('/admin/allUser', (req,res)=>{
         if(err) return res.send(err.message)
         let data = result
         data.map(item=>{
-            item.avatar = `https://api.komputer-shop.com/avatar/${item.avatar}`
+            item.avatar = `http://localhost:2018/avatar/${item.avatar}`
             // console.log(item.avatar)
         })
         // console.log(data)
